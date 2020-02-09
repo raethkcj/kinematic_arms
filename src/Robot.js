@@ -12,13 +12,31 @@ class Robot extends React.Component {
 		this.canvasRef = React.createRef()
 
 		this.state = {
-			links: Array.from({length: 3}, () => { 
-				return {
-					length: this.randomLength(), 
-					angle: this.randomAngle(),
-					color: "red"
-				}
-			})
+			links: Array.from({length: 3}, () => this.newLink())
+		}
+	}
+
+	newLink() {
+		return {
+			length: this.randomLength(),
+			angle: this.randomAngle(),
+			color: this.randomColor()
+		}
+	}
+
+	addLink = () => {
+		if(this.state.links.length < 10) {
+			this.setState(prevState => ({
+				links: [...prevState.links, this.newLink()]
+			}))
+		}
+	}
+
+	removeLink = () => {
+		if(this.state.links.length > 1) {
+			this.setState(prevState => ({
+				links: prevState.links.slice(0,-1)
+			}))
 		}
 	}
 
@@ -30,12 +48,20 @@ class Robot extends React.Component {
 	// Set initial angle from -90 to 90 degrees
 	randomAngle() {
 		return (Math.floor(Math.random() * 180) - 90) * (Math.PI / 180)
-		//return 45 * (Math.PI / 180)
+	}
+
+	// Set initial color with random hue, 100% saturation, 50% lightness
+	randomColor() {
+		return "hsl(" + 360 * Math.random() + ",100%,50%)"
 	}
 
 	render() {
 		return (
-			<RobotCanvas links={this.state.links} />
+			<div>
+				<RobotCanvas links={this.state.links} />
+				<button onClick={this.addLink} >Add Link</button>
+				<button onClick={this.removeLink} >Remove Last Link</button>
+			</div>
 		);
 	}
 }

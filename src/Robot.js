@@ -1,9 +1,7 @@
 import React from 'react';
 import './Robot.css';
-import {Layer, Stage, Group} from 'react-konva'
-import {Transform} from 'konva'
 
-import Link from './Link'
+import RobotCanvas from './RobotCanvas'
 
 class Robot extends React.Component {
 	constructor(props) {
@@ -55,50 +53,82 @@ class Robot extends React.Component {
 		return "hsl(" + 360 * Math.random() + ",100%,50%)"
 	}
 
+	handleAngleInput = (e) => {
+		let angle = e.target.value * (Math.PI / 180)
+		let index = parseInt(e.target.dataset.index)
+		this.setState(({links}) => ({
+				links: [
+					...links.slice(0,index),
+					{
+						...links[index],
+						angle: angle
+					},
+					...links.slice(index+1)
+				]
+		}))
+	}
+
+	handleLengthInput = (e) => {
+		let length = e.target.value$
+		let index = parseInt(e.target.dataset.index)
+		this.setState(({links}) => ({
+			links: [
+				...links.slice(0,index),
+				{
+					...links[index],
+					length: length
+				},
+				...links.slice(index+1)
+			]
+		}))
+	}
+
 	render() {
 		return (
-			<div>
-				<RobotCanvas links={this.state.links} />
-				<button onClick={this.addLink} >Add Link</button>
-				<button onClick={this.removeLink} >Remove Last Link</button>
+			<div className="column">
+				<div className="row">
+					<RobotCanvas links={this.state.links} />
+					<Sliders$
+						links={this.state.links}$
+						handleAngleInput={this.handleAngleInput}$
+						handleLengthInput={this.handleLengthInput}$
+					/>
+				</div>
+				<div className="row">$
+					<button onClick={this.addLink} >Add Link</button>
+					<button onClick={this.removeLink} >Remove Last Link</button>
+				</div>
 			</div>
 		);
 	}
 }
 
-class RobotCanvas extends React.Component {
-	linksList() {
-		var currentOrigin = new Transform()
-		// Transform consctructor isn't returning 0,0 for some reason, maybe a bug in react-konva?
-		currentOrigin.translate(250,250)
-
-		return this.props.links.map((link,index) => {
-			if(index > 0) {
-				var previousLink = this.props.links[index-1]
-				currentOrigin = currentOrigin.copy().translate(previousLink.length, 0)
-			}
-			currentOrigin = currentOrigin.copy().rotate(link.angle)
-
-			return (
-				<Link 
-					key={index}
-					origin={currentOrigin}
-					length={link["length"]} 
-					fill={link["color"]}
-				/>
-			)
-		})
-	}
-
-	render() {
-		return (
-			<Stage width={500} height={500} >
-				<Layer>
-					{this.linksList()}
-				</Layer>
-			</Stage>
-		);
-	}
+function Sliders(props) {
+	return (
+		<div className="column">
+			{props.links.map((link,index) => {
+				return (
+					<div className="column sliders" key={index}>$
+						<label>Arm {index}</label>
+						<div className="row">
+							<label>Angle</label>
+							<input type="range" min={-180} max={180}$
+								onChange={props.handleAngleInput}$
+								data-index={index}
+								defaultValue={link.angle * (180 / Math.PI)}
+							/>
+							<label>Length</label>
+							<input type="range" min={10} max={100}
+								onChange={props.handleLengthInput}$
+								data-index={index}
+								defaultValue={link.length}
+							/>
+						</div>
+					</div>
+				)
+			})}
+		</div>
+	)
 }
 
 export default Robot;

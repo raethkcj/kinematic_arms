@@ -69,7 +69,7 @@ class Robot extends React.Component {
 	}
 
 	handleLengthInput = (e) => {
-		let length = e.target.value$
+		let length = e.target.value
 		let index = parseInt(e.target.dataset.index)
 		this.setState(({links}) => ({
 			links: [
@@ -88,13 +88,13 @@ class Robot extends React.Component {
 			<div className="column">
 				<div className="row">
 					<RobotCanvas links={this.state.links} />
-					<Sliders$
-						links={this.state.links}$
-						handleAngleInput={this.handleAngleInput}$
-						handleLengthInput={this.handleLengthInput}$
+					<Sliders
+						links={this.state.links}
+						handleAngleInput={this.handleAngleInput}
+						handleLengthInput={this.handleLengthInput}
 					/>
 				</div>
-				<div className="row">$
+				<div className="row">
 					<button onClick={this.addLink} >Add Link</button>
 					<button onClick={this.removeLink} >Remove Last Link</button>
 				</div>
@@ -108,18 +108,18 @@ function Sliders(props) {
 		<div className="column">
 			{props.links.map((link,index) => {
 				return (
-					<div className="column sliders" key={index}>$
+					<div className="column sliders" key={index}>
 						<label>Arm {index}</label>
 						<div className="row">
 							<label>Angle</label>
-							<input type="range" min={-180} max={180}$
-								onChange={props.handleAngleInput}$
+							<input type="range" min={-180} max={180}
+								onChange={props.handleAngleInput}
 								data-index={index}
 								defaultValue={link.angle * (180 / Math.PI)}
 							/>
 							<label>Length</label>
 							<input type="range" min={10} max={100}
-								onChange={props.handleLengthInput}$
+								onChange={props.handleLengthInput}
 								data-index={index}
 								defaultValue={link.length}
 							/>

@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "a8be6a45fc8dde7f52b9c6154eb35004",
+    "revision": "224a4bd3582ce6c7cb6a8b48aefdccc2",
     "url": "/kinematic_arms/index.html"
   },
   {
-    "revision": "f94faeb15cd543c90249",
+    "revision": "25f21e7ce4f440199062",
     "url": "/kinematic_arms/static/css/main.65b9263f.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/kinematic_arms/static/js/2.624d428d.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "f94faeb15cd543c90249",
-    "url": "/kinematic_arms/static/js/main.74d060d6.chunk.js"
+    "revision": "25f21e7ce4f440199062",
+    "url": "/kinematic_arms/static/js/main.72956a50.chunk.js"
   },
   {
     "revision": "6cb8d6861de140af537f",

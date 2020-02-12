@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/kinematic_arms/static/css/main.65b9263f.chunk.css",
-    "main.js": "/kinematic_arms/static/js/main.74d060d6.chunk.js",
-    "main.js.map": "/kinematic_arms/static/js/main.74d060d6.chunk.js.map",
+    "main.js": "/kinematic_arms/static/js/main.72956a50.chunk.js",
+    "main.js.map": "/kinematic_arms/static/js/main.72956a50.chunk.js.map",
     "runtime-main.js": "/kinematic_arms/static/js/runtime-main.db8d1f33.js",
     "runtime-main.js.map": "/kinematic_arms/static/js/runtime-main.db8d1f33.js.map",
     "static/js/2.624d428d.chunk.js": "/kinematic_arms/static/js/2.624d428d.chunk.js",
     "static/js/2.624d428d.chunk.js.map": "/kinematic_arms/static/js/2.624d428d.chunk.js.map",
     "index.html": "/kinematic_arms/index.html",
-    "precache-manifest.50326343f4e0bd2ec48e950f10de8b89.js": "/kinematic_arms/precache-manifest.50326343f4e0bd2ec48e950f10de8b89.js",
+    "precache-manifest.c8c2cf0a378cda470fb794485a0262de.js": "/kinematic_arms/precache-manifest.c8c2cf0a378cda470fb794485a0262de.js",
     "service-worker.js": "/kinematic_arms/service-worker.js",
     "static/css/main.65b9263f.chunk.css.map": "/kinematic_arms/static/css/main.65b9263f.chunk.css.map",
     "static/js/2.624d428d.chunk.js.LICENSE.txt": "/kinematic_arms/static/js/2.624d428d.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.db8d1f33.js",
     "static/js/2.624d428d.chunk.js",
     "static/css/main.65b9263f.chunk.css",
-    "static/js/main.74d060d6.chunk.js"
+    "static/js/main.72956a50.chunk.js"
   ]
 }

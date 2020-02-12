@@ -23,7 +23,7 @@ class Robot extends React.Component {
 	}
 
 	addLink = () => {
-		if(this.state.links.length < 10) {
+		if(this.state.links.length < 7) {
 			this.setState(prevState => ({
 				links: [...prevState.links, this.newLink()]
 			}))

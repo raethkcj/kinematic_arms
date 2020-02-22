@@ -2,6 +2,7 @@ import React from 'react';
 import './Robot.css';
 
 import RobotCanvas from './RobotCanvas'
+import Controls from './Controls'
 
 class Robot extends React.Component {
 	constructor(props) {
@@ -93,7 +94,7 @@ class Robot extends React.Component {
 						<button onClick={this.removeLink} >Remove Last Link</button>
 					</div>
 				</div>
-				<Sliders
+				<Controls
 					links={this.state.links}
 					handleAngleInput={this.handleAngleInput}
 					handleLengthInput={this.handleLengthInput}
@@ -101,38 +102,6 @@ class Robot extends React.Component {
 			</div>
 		);
 	}
-}
-
-function Sliders(props) {
-	return (
-		<div className="column">
-			{props.links.map((link,index) => {
-				return (
-					<fieldset key={index}>
-						<legend>Link {index+1}</legend>
-						<div className="row">
-							<label className="row">
-								Angle
-								<input type="range" min={-180} max={180}
-									onChange={props.handleAngleInput}
-									data-index={index}
-									defaultValue={link.angle * (180 / Math.PI)}
-								/>
-							</label>
-							<label className="row">
-								Length
-								<input type="range" min={10} max={100}
-									onChange={props.handleLengthInput}
-									data-index={index}
-									defaultValue={link.length}
-								/>
-							</label>
-						</div>
-					</fieldset>
-				)
-			})}
-		</div>
-	)
 }
 
 export default Robot;

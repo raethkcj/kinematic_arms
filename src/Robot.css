@@ -1,24 +1,18 @@
-.Robot {
-  text-align: center;
-}
-
-div {
-	display: flex;
-}
-
 .column {
-	flex-direction: column;
-}
-
-.column > div {
+	display: flex;
+	flex-flow: column;
+	margin: 0px 3px;
 }
 
 .row {
-	flex-flow: row wrap;
+	display: flex;
+	justify-content: center;
 }
 
 .sliders {
 	margin: 10px 0px;
-	flex-wrap: wrap;
-	justify-content: center;
+}
+
+.konvajs-content {
+	border: 1px solid black;
 }

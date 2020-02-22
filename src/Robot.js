@@ -23,7 +23,7 @@ class Robot extends React.Component {
 	}
 
 	addLink = () => {
-		if(this.state.links.length < 7) {
+		if(this.state.links.length < 10) {
 			this.setState(prevState => ({
 				links: [...prevState.links, this.newLink()]
 			}))
@@ -85,19 +85,19 @@ class Robot extends React.Component {
 
 	render() {
 		return (
-			<div className="column">
-				<div className="row">
+			<div className="row">
+				<div className="column">
 					<RobotCanvas links={this.state.links} />
-					<Sliders
-						links={this.state.links}
-						handleAngleInput={this.handleAngleInput}
-						handleLengthInput={this.handleLengthInput}
-					/>
+					<div className="row">
+						<button onClick={this.addLink} >Add Link</button>
+						<button onClick={this.removeLink} >Remove Last Link</button>
+					</div>
 				</div>
-				<div className="row">
-					<button onClick={this.addLink} >Add Link</button>
-					<button onClick={this.removeLink} >Remove Last Link</button>
-				</div>
+				<Sliders
+					links={this.state.links}
+					handleAngleInput={this.handleAngleInput}
+					handleLengthInput={this.handleLengthInput}
+				/>
 			</div>
 		);
 	}
@@ -108,23 +108,25 @@ function Sliders(props) {
 		<div className="column">
 			{props.links.map((link,index) => {
 				return (
-					<div className="column sliders" key={index}>
+					<form className="column sliders" key={index}>
 						<label>Arm {index}</label>
 						<div className="row">
-							<label>Angle</label>
+							<label for={"angle" + index}>Angle</label>
 							<input type="range" min={-180} max={180}
 								onChange={props.handleAngleInput}
 								data-index={index}
 								defaultValue={link.angle * (180 / Math.PI)}
+								id={"angle" + index}
 							/>
-							<label>Length</label>
+							<label for={"length" + index}>Length</label>
 							<input type="range" min={10} max={100}
 								onChange={props.handleLengthInput}
 								data-index={index}
 								defaultValue={link.length}
+								id={"length" + index}
 							/>
 						</div>
-					</div>
+					</form>
 				)
 			})}
 		</div>

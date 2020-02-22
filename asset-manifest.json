@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/kinematic_arms/static/css/main.65b9263f.chunk.css",
-    "main.js": "/kinematic_arms/static/js/main.72956a50.chunk.js",
-    "main.js.map": "/kinematic_arms/static/js/main.72956a50.chunk.js.map",
+    "main.css": "/kinematic_arms/static/css/main.c785ff76.chunk.css",
+    "main.js": "/kinematic_arms/static/js/main.65fd1a3c.chunk.js",
+    "main.js.map": "/kinematic_arms/static/js/main.65fd1a3c.chunk.js.map",
     "runtime-main.js": "/kinematic_arms/static/js/runtime-main.db8d1f33.js",
     "runtime-main.js.map": "/kinematic_arms/static/js/runtime-main.db8d1f33.js.map",
     "static/js/2.624d428d.chunk.js": "/kinematic_arms/static/js/2.624d428d.chunk.js",
     "static/js/2.624d428d.chunk.js.map": "/kinematic_arms/static/js/2.624d428d.chunk.js.map",
     "index.html": "/kinematic_arms/index.html",
-    "precache-manifest.c8c2cf0a378cda470fb794485a0262de.js": "/kinematic_arms/precache-manifest.c8c2cf0a378cda470fb794485a0262de.js",
+    "precache-manifest.93a136b37f151104d318536df8114bf4.js": "/kinematic_arms/precache-manifest.93a136b37f151104d318536df8114bf4.js",
     "service-worker.js": "/kinematic_arms/service-worker.js",
-    "static/css/main.65b9263f.chunk.css.map": "/kinematic_arms/static/css/main.65b9263f.chunk.css.map",
+    "static/css/main.c785ff76.chunk.css.map": "/kinematic_arms/static/css/main.c785ff76.chunk.css.map",
     "static/js/2.624d428d.chunk.js.LICENSE.txt": "/kinematic_arms/static/js/2.624d428d.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.db8d1f33.js",
     "static/js/2.624d428d.chunk.js",
-    "static/css/main.65b9263f.chunk.css",
-    "static/js/main.72956a50.chunk.js"
+    "static/css/main.c785ff76.chunk.css",
+    "static/js/main.65fd1a3c.chunk.js"
   ]
 }

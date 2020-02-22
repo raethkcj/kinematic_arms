@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ddf505555b53438eb7fa0133be68d4f6",
+    "revision": "b3b53671390560f571463514d6adbbeb",
     "url": "/kinematic_arms/index.html"
   },
   {

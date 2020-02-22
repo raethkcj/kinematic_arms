@@ -108,25 +108,27 @@ function Sliders(props) {
 		<div className="column">
 			{props.links.map((link,index) => {
 				return (
-					<form className="column sliders" key={index}>
-						<label>Arm {index}</label>
+					<fieldset key={index}>
+						<legend>Link {index+1}</legend>
 						<div className="row">
-							<label for={"angle" + index}>Angle</label>
-							<input type="range" min={-180} max={180}
-								onChange={props.handleAngleInput}
-								data-index={index}
-								defaultValue={link.angle * (180 / Math.PI)}
-								id={"angle" + index}
-							/>
-							<label for={"length" + index}>Length</label>
-							<input type="range" min={10} max={100}
-								onChange={props.handleLengthInput}
-								data-index={index}
-								defaultValue={link.length}
-								id={"length" + index}
-							/>
+							<label className="row">
+								Angle
+								<input type="range" min={-180} max={180}
+									onChange={props.handleAngleInput}
+									data-index={index}
+									defaultValue={link.angle * (180 / Math.PI)}
+								/>
+							</label>
+							<label className="row">
+								Length
+								<input type="range" min={10} max={100}
+									onChange={props.handleLengthInput}
+									data-index={index}
+									defaultValue={link.length}
+								/>
+							</label>
 						</div>
-					</form>
+					</fieldset>
 				)
 			})}
 		</div>

@@ -1,7 +1,6 @@
 .column {
 	display: flex;
 	flex-flow: column;
-	margin: 0px 3px;
 }
 
 .row {
@@ -10,10 +9,19 @@
 	flex-wrap: wrap;
 }
 
-.sliders {
-	margin: 10px 0px;
+.konvajs-content {
+	border: 1px black;
+	border-style: solid none;
 }
 
-.konvajs-content {
-	border: 1px solid black;
+fieldset {
+	padding: 10px;
+	border: 1px solid lightgrey;
+	margin: 0px 3px;
+}
+
+@media (min-width: 502px) {
+	.konvajs-content {
+		border-style: solid;
+	}
 }

@@ -17,7 +17,7 @@
 fieldset {
 	padding: 10px;
 	border: 1px solid lightgrey;
-	margin: 0px 3px;
+	margin: 3px;
 }
 
 @media (min-width: 502px) {

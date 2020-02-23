@@ -1,5 +1,6 @@
 import React from 'react';
 import './Robot.css';
+import {Transform} from 'konva';
 
 import RobotCanvas from './RobotCanvas'
 import Controls from './Controls'
@@ -11,8 +12,21 @@ class Robot extends React.Component {
 		this.canvasRef = React.createRef()
 
 		this.state = {
-			links: Array.from({length: 3}, () => this.newLink())
+			width: 0,
+			links: Array.from({length: 3}, () => this.newLink()),
+			timeoutID: undefined
 		}
+	}
+
+	componentDidMount() {
+		this.updateDimensions();
+		window.addEventListener("resize", this.updateDimensions)
+	}
+
+	updateDimensions = () => {
+		this.setState({
+			width: Math.min(document.querySelector('html').clientWidth,500)
+		})
 	}
 
 	newLink() {
@@ -54,19 +68,29 @@ class Robot extends React.Component {
 		return "hsl(" + 360 * Math.random() + ",100%,50%)"
 	}
 
-	handleAngleInput = (e) => {
-		let angle = e.target.value * (Math.PI / 180)
-		let index = parseInt(e.target.dataset.index)
+	setAngle(index, value) {
+		if(value < -Math.PI) {
+			value = 2*Math.PI - value
+		}
+		if(value > Math.PI) {
+			value -= 2*Math.PI
+		}
 		this.setState(({links}) => ({
 				links: [
 					...links.slice(0,index),
 					{
 						...links[index],
-						angle: angle
+						angle: value
 					},
 					...links.slice(index+1)
 				]
 		}))
+	}
+
+	handleAngleInput = (e) => {
+		let index = parseInt(e.target.dataset.index)
+		let angle = e.target.value * (Math.PI / 180)
+		this.setAngle(index, angle)
 	}
 
 	handleLengthInput = (e) => {
@@ -84,11 +108,94 @@ class Robot extends React.Component {
 		}))
 	}
 
+	calculateDistance(links, goal) {
+		let origin = new Transform()
+		let midpoint = this.state.width / 2
+		origin.translate(midpoint,midpoint)
+
+		links.forEach(link => {
+			origin.rotate(link.angle)
+			origin.translate(link.length, 0)
+		})
+
+		let tip = origin.point({x: 0, y: 0})
+		return Math.hypot(goal.x - tip.x, goal.y - tip.y)
+	}
+
+	inverseKin = (e) => {
+		if(typeof this.state.timeoutID === 'number') {
+			clearTimeout(this.state.timeoutID)
+		}
+
+		let goal = e.target.getStage().getPointerPosition()
+		let distance = this.calculateDistance(this.state.links, goal)
+		let maxSpeed = Number.MAX_VALUE
+
+		// Run each step in a timeout, and store the timeout ID in state.
+		// This is so that if a new goal is set while we are working on a previous goal,
+		// we can properly abandon the previous goal and start working on the new one.
+		let timeoutID = setTimeout(this.step(goal, distance, maxSpeed), 0)
+		this.setState({
+			timeoutID: timeoutID
+		})
+	}
+
+	// step() runs "recursively" using timeouts. As long as it keeps making
+	// progress towards the goal, it sets a new timeout to call itself again.
+	// If the goal is reached, or we can't make any significant progress,
+	// it stops calling itself and clears the timeout ID in state.
+	step = (goal, distance, maxSpeed) => {
+		if(distance > 3 && maxSpeed > 0.5) {
+			let previousGradients = Array(this.state.links.length).fill(0)
+			let speeds = Array(this.state.links.length).fill(0)
+			let links = this.state.links.map(link => ({
+				...link
+			}))
+
+			links.forEach((link,i) => {
+				link.angle += (Math.PI / 180)
+				let up = this.calculateDistance(links, goal)
+				link.angle -= 2 * (Math.PI / 180)
+				let down = this.calculateDistance(links, goal)
+				link.angle += (Math.PI / 180)
+
+				let gradient = up - down
+				if(previousGradients[i] * gradient < 0) {
+					let newAngle = this.state.links[i].angle - (Math.PI / 180) * (speeds[i] * previousGradients[i]) / (gradient - previousGradients[i])
+					this.setAngle(i, newAngle)
+					speeds[i] = 0
+				} else {
+					speeds[i] += gradient
+				}
+
+				previousGradients[i] = gradient
+				let newAngle = this.state.links[i].angle - (speeds[i] * Math.PI / 180)
+				this.setAngle(i, newAngle)
+			})
+
+			distance = this.calculateDistance(this.state.links, goal)
+			maxSpeed = speeds.reduce((acc,curr) => Math.max(acc,Math.abs(curr)))
+
+			let timeoutID = setTimeout(() => this.step(goal, distance, maxSpeed), 5)
+			this.setState({
+				timeoutID: timeoutID
+			})
+		} else {
+			this.setState({
+				timeoutID: undefined
+			})
+		}
+	}
+
 	render() {
 		return (
 			<div className="row">
 				<div className="column">
-					<RobotCanvas links={this.state.links} />
+					<RobotCanvas
+						width={this.state.width}
+						links={this.state.links}
+						onClick={this.inverseKin}
+					/>
 					<div className="row">
 						<button onClick={this.addLink} >Add Link</button>
 						<button onClick={this.removeLink} >Remove Last Link</button>

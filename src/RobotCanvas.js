@@ -6,16 +6,9 @@ import {Transform} from 'konva'
 import Link from './Link'
 
 class RobotCanvas extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			width: 0
-		}
-	}
-
 	linksList() {
 		let currentOrigin = new Transform()
-		let midpoint = this.state.width / 2
+		let midpoint = this.props.width / 2
 		currentOrigin.translate(midpoint,midpoint)
 
 		return this.props.links.map((link,index) => {
@@ -36,20 +29,9 @@ class RobotCanvas extends React.Component {
 		})
 	}
 
-	componentDidMount() {
-		this.updateDimensions();
-		window.addEventListener("resize", this.updateDimensions)
-	}
-
-	updateDimensions = () => {
-		this.setState({
-			width: Math.min(document.querySelector('html').clientWidth,500)
-		})
-	}
-
 	render() {
 		return (
-			<Stage width={this.state.width} height={this.state.width} >
+			<Stage width={this.props.width} height={this.props.width} onClick={this.props.onClick} >
 				<Layer>
 					{this.linksList()}
 				</Layer>

@@ -1,7 +1,7 @@
 import React from 'react';
 import './Robot.css';
 import {Layer, Stage, Group, Circle} from 'react-konva'
-import {Transform, Animation} from 'konva'
+import {Transform} from 'konva'
 
 import Link from './Link'
 
@@ -11,21 +11,13 @@ class Goal extends React.Component {
 		this.bloop = React.createRef()
 	}
 
-	animateBloop = () => {
+	componentDidMount() {
 		this.bloop.current.to({
 			scaleX: 2,
 			scaleY: 2,
 			opacity: 0,
-			duration: 0.05
+			duration: 0.2
 		})
-	}
-
-	componentDidMount() {
-		this.animateBloop()
-	}
-
-	componentDidUpdate() {
-		this.animateBloop()
 	}
 
 	render() {

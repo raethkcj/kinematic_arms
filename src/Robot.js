@@ -123,9 +123,13 @@ class Robot extends React.Component {
 		return Math.hypot(this.state.goal.x - tip.x, this.state.goal.y - tip.y)
 	}
 
-	inverseKin = (e) => {
+	handleClick = (e) => {
 		if(typeof this.state.timeoutID === 'number') {
 			clearTimeout(this.state.timeoutID)
+			this.setState({
+				goal: undefined,
+				timeoutID: undefined
+			})
 		}
 
 		let goal = e.target.getStage().getPointerPosition()
@@ -136,20 +140,20 @@ class Robot extends React.Component {
 		let distance = this.calculateDistance(this.state.links)
 		let maxSpeed = Number.MAX_VALUE
 
-		// Run each step in a timeout, and store the timeout ID in state.
+		// Run each inverseKinStep in a timeout, and store the timeout ID in state.
 		// This is so that if a new goal is set while we are working on a previous goal,
 		// we can properly abandon the previous goal and start working on the new one.
-		let timeoutID = setTimeout(this.step(distance, maxSpeed), 0)
+		let timeoutID = setTimeout(this.inverseKinStep(distance, maxSpeed), 0)
 		this.setState({
 			timeoutID: timeoutID
 		})
 	}
 
-	// step() runs "recursively" using timeouts. As long as it keeps making
+	// inverseKinStep() runs "recursively" using timeouts. As long as it keeps making
 	// progress towards the goal, it sets a new timeout to call itself again.
 	// If the goal is reached, or we can't make any significant progress,
 	// it stops calling itself and clears the timeout ID in state.
-	step = (distance, maxSpeed) => {
+	inverseKinStep = (distance, maxSpeed) => {
 		if(distance > 3 && maxSpeed > 0.5) {
 			let previousGradients = Array(this.state.links.length).fill(0)
 			let speeds = Array(this.state.links.length).fill(0)
@@ -166,6 +170,7 @@ class Robot extends React.Component {
 				let gradient = up - down
 				if(previousGradients[i] * gradient < 0) {
 					let newAngle = this.state.links[i].angle - (Math.PI / 180) * (speeds[i] * previousGradients[i]) / (gradient - previousGradients[i])
+					link.angle = newAngle
 					this.setAngle(i, newAngle)
 					speeds[i] = 0
 				} else {
@@ -174,13 +179,14 @@ class Robot extends React.Component {
 
 				previousGradients[i] = gradient
 				let newAngle = this.state.links[i].angle - speeds[i] * (Math.PI / 180)
+				link.angle = newAngle
 				this.setAngle(i, newAngle)
 			})
 
 			distance = this.calculateDistance(this.state.links)
 			maxSpeed = speeds.reduce((acc,curr) => Math.max(acc,Math.abs(curr)))
 
-			let timeoutID = setTimeout(() => this.step(distance, maxSpeed), 5)
+			let timeoutID = setTimeout(() => this.inverseKinStep(distance, maxSpeed), 15)
 			this.setState({
 				timeoutID: timeoutID
 			})
@@ -200,7 +206,7 @@ class Robot extends React.Component {
 						width={this.state.width}
 						links={this.state.links}
 						goal={this.state.goal}
-						onClick={this.inverseKin}
+						onClick={this.handleClick}
 					/>
 					<div className="row">
 						<button onClick={this.addLink} >Add Link</button>

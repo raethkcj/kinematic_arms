@@ -132,7 +132,7 @@ class Robot extends React.Component {
 			})
 		}
 
-		let goal = e.target.getStage().getPointerPosition()
+		let goal = e.currentTarget.getPointerPosition()
 		this.setState({
 			goal: goal
 		})

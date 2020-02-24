@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/kinematic_arms/precache-manifest.7bed17ac5b98126aa182c234fb592545.js"
+  "/kinematic_arms/precache-manifest.30ef9b76c2d148c81625e53cebdcd717.js"
 );
 
 self.addEventListener('message', (event) => {

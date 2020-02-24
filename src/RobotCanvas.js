@@ -1,9 +1,54 @@
 import React from 'react';
 import './Robot.css';
-import {Layer, Stage} from 'react-konva'
-import {Transform} from 'konva'
+import {Layer, Stage, Group, Circle} from 'react-konva'
+import {Transform, Animation} from 'konva'
 
 import Link from './Link'
+
+class Goal extends React.Component {
+	constructor(props) {
+		super(props)
+		this.bloop = React.createRef()
+	}
+
+	animateBloop = () => {
+		this.bloop.current.to({
+			scaleX: 2,
+			scaleY: 2,
+			opacity: 0,
+			duration: 0.05
+		})
+	}
+
+	componentDidMount() {
+		this.animateBloop()
+	}
+
+	componentDidUpdate() {
+		this.animateBloop()
+	}
+
+	render() {
+		return (
+			<Group>
+				<Circle
+					ref={this.bloop}
+					x={this.props.goal.x}
+					y={this.props.goal.y}
+					fill="red"
+					opacity={0.5}
+					radius={6}
+				/>
+				<Circle
+					x={this.props.goal.x}
+					y={this.props.goal.y}
+					fill="red"
+					radius={5}
+				/>
+			</Group>
+		)
+	}
+}
 
 class RobotCanvas extends React.Component {
 	linksList() {
@@ -30,9 +75,11 @@ class RobotCanvas extends React.Component {
 	}
 
 	render() {
+		let goal = this.props.goal ? <Goal goal={this.props.goal} /> : null
 		return (
 			<Stage width={this.props.width} height={this.props.width} onClick={this.props.onClick} >
 				<Layer>
+					{goal}
 					{this.linksList()}
 				</Layer>
 			</Stage>
